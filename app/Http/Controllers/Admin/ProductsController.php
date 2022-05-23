@@ -23,7 +23,8 @@ class ProductsController extends Controller
 
     public function list()
     {
-        $products = Products::get(); 
+        $products = Products::with(['category','product_type'])->get(); 
+        //dd($products);
         return view('admin.products.list',['products' => $products]);
     }
     
@@ -140,9 +141,10 @@ class ProductsController extends Controller
     }
     public function delete($id)
     {
-        $City = City::find($id);
-        $City->delete();
-        return redirect()->route('softwareSetup.city.list')->with('message','Sucessfully deleted');
+        // unlink product image , then delete 
+        $product = Products::Find($id);
+       // $product->delete();
+        return redirect()->route('admin.product.management.list')->with('message','Sucessfully deleted');
          
     }
     public function restore($id)
@@ -282,4 +284,9 @@ class ProductsController extends Controller
       //dd($lastid);
       return($picSaveStatus);
   }
+    public function details($id){
+        $q =  Products::Find($id);
+        dd($q);
+        
+    }
 }

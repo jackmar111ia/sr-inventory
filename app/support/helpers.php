@@ -958,7 +958,7 @@ function linkwithfaicon(
                     gap(1);
                 } ?>
     
-            <i class="fas fa-<?php echo $iconname1; ?>" aria-hidden="true"></i> <i class="fas fa-<?php echo $iconname2; ?>"
+            <i class="fa fa-<?php echo $iconname1; ?>" aria-hidden="true"></i> <i class="fas fa-<?php echo $iconname2; ?>"
                 aria-hidden="true"></i>
     
             <?php if ($LinkTextPos == "afterIcon") {

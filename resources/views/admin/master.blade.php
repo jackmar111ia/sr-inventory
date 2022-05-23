@@ -11,6 +11,8 @@
     <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
 	<!-- icons -->
+	<link href="{{ asset('backends') }}/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('backends') }}/assets/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backends') }}/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 	<!--bootstrap -->

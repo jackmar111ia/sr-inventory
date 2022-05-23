@@ -24,11 +24,14 @@ some text
                     <div>
                         <!---------Child Retrieve------>
                             <div class="table-scrollable">
-                                <table class="table table-striped table-hover" >
+                                <table class="table table-bordered table-striped table-responsive">
+                                 
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Image</th>
+                                            <th>Category</th>
+                                            <th>Product Type</th>
                                             <th>Product Name</th>
                                             <th>Description</th>
                                         </tr>
@@ -39,6 +42,10 @@ some text
                                     <tbody>
                                         <tr class="odd gradeX">
                                             <td>{{ $loop->iteration }}.</td>
+
+                                            <td>{{ $product->category->category }} </td>
+                                            <td>{{ $product->product_type->product_type }}</td>
+
                                             
                                             <td>
                                                 @if($product->pic_thumb == "no_thumb")
@@ -51,21 +58,30 @@ some text
                                             <td><?php echo $product->description; ?></td>
                                             
                                             <td class="center">
-                                                 
-                                                <?php  
-                                                
-                                                linkwithfaicon ("admin.product.management.update",$product->id,"Update Product",'','','','',
-                                                'pencil','',"","",
-                                                'no',"",'success','','');
-                                                
-                                                ?>
 
-                                                <?php  
-                                                /*
-                                                linkwithfaicon ("softwareSetup.city.list.delete",$SingleCity->id,"Delete City",'','','','',
-                                                'trash','',"","",
-                                                'yes',"",'danger','white','');*/
-                                                ?>
+                                                <div class="btn-group">
+                                                   
+                                                        <a href="{{ route('admin.product.management.details',['id'=> $product->id]) }}" 
+                                                                class="btn btn-primary btn-xs m-b-10">
+                                                                <i class="fa fa-search" aria-hidden="true"></i> <?php txt("Details");?>
+                                                        </a>
+                                                        <a href="{{ route('admin.product.management.update',['id'=> $product->id]) }}" 
+                                                                class="btn btn-success btn-xs m-b-10">
+                                                                <i class="fa fa-pencil" aria-hidden="true"></i> <?php txt("Edit");?>
+                                                        </a>
+                                                    
+                                                        <!--
+                                                        Booking cancel is possible till before checkIn Date
+                                                        --!-->
+                                                        <a href="{{ route('admin.product.management.delete',['id'=> $product->id]) }}" 
+                                                                class="btn btn-danger btn-xs m-b-10">
+                                                                <i class="fa fa-times" aria-hidden="true"></i> <?php txt("Delete");?>
+                                                        </a>
+                                                        
+                                                    
+                                                </div>
+                                                 
+                                                 
                                             
                                             
                                             </td>

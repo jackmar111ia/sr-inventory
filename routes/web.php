@@ -256,7 +256,12 @@ Route::prefix('admin')->group(function(){
         Route::get('product/update/{id}','Admin\ProductsController@update')->name('admin.product.management.update');  
          //product updsaveate  
         Route::post('product/update','Admin\ProductsController@updateSave')->name('admin.product.management.updateSave');  
-        
+        // delete product 
+        Route::get('product/delete/{id}','Admin\ProductsController@delete')->name('admin.product.management.delete');  
+        // product details 
+        Route::get('product/details/{id}','Admin\ProductsController@details')->name('admin.product.management.details');  
+
+         
     });
     
 });
