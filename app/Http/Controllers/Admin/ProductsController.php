@@ -30,7 +30,7 @@ class ProductsController extends Controller
     public function save(ProductValidationRequest $request)
     {
         // custom validation is used here 
-        // php artisan make:request admin/CityValidationRequest
+        // php artisan make:request admin/ProductValidationRequest
         
 
         if($request->hasFile('picture'))
@@ -86,23 +86,29 @@ class ProductsController extends Controller
 
         return view('admin.products.edit',compact('categories','producttypes','EditableRow'));
     }
-    public function updateSave(CityValidationRequest $request)
-    {
 
+
+    public function updateSave(ProductValidationRequest $request)
+    {
+        //dd($request->all());
         $EditableId = $request->EditableProductId;
 
         $pInfo = Products::where('id',$EditableId)->first();
+        //dd($pInfo);
        
-        if($request->hasFile('picture')) // country update with image
+        if($request->hasFile('picture')) // product update with image
         {
-          
             // first unlink old picturers
-            $old_picture = $pInfo->picture;
-          
+            $olpicture_large = $pInfo->pic_large;
+            $olpicture_thumb = $pInfo->pic_thumb;
 
             // pic large unlink 
-            if(file_exists($old_picture))
-                unlink($old_picture);
+            if(file_exists($olpicture_large))
+                unlink($olpicture_large);
+
+           // pic thumb unlink 
+            if(file_exists($olpicture_thumb))
+                unlink($olpicture_thumb);
 
             // product info update
             $savedStatus = $this->ProductSave($request);
@@ -112,10 +118,10 @@ class ProductsController extends Controller
             $picSaveStatus = $this->ProductPicUpload($request,$EditableId);
 
                 if ($picSaveStatus == "yes")
-                return redirect()->route('softwareSetup.city.list')->with('success','City has been updated successfully!'); // as per sofall tutorial
+                return redirect()->route('admin.product.management.list')->with('success','Product has been updated successfully!'); // as per sofall tutorial
             
                 else
-                return redirect()->action('Admin\CityController@update',$EditableId)->back()->withInput();
+                return redirect()->action('Admin\ProductsController@update',$EditableId)->back()->withInput();
 
         }
         else // country update without image
@@ -124,17 +130,17 @@ class ProductsController extends Controller
             $savedStatus = $this->ProductSave($request);
          
             if ($savedStatus == "yes")
-            return redirect()->route('softwareSetup.city.list')->with('success','City has been updated successfully!'); 
+            return redirect()->route('admin.product.management.list')->with('success','Product has been updated successfully!'); 
         
             else
-            return redirect()->action('Admin\CityController@update',$EditableId)->back()->withInput();
+            return redirect()->action('Admin\ProductsController@update',$EditableId)->back()->withInput();
         }
        
         
     }
     public function delete($id)
     {
-        $City=City::find($id);
+        $City = City::find($id);
         $City->delete();
         return redirect()->route('softwareSetup.city.list')->with('message','Sucessfully deleted');
          
@@ -174,7 +180,7 @@ class ProductsController extends Controller
         $pObj->canada_price = $request->canada_price;
         $pObj->wb_price = $request->wb_price;
         $pObj->variable_product_price = $request->variable_product_price;
-        $pObj->product_add_type = "manual";
+        
         $pObj->product_sr_id = 0;
         $pObj->supplier_sku = $request->supplier_sku;
         $pObj->supplier_description = $request->supplier_description;
@@ -192,9 +198,11 @@ class ProductsController extends Controller
 
         if($editid == 0) // if new row entry
         {
+            $pObj->product_add_type = "manual";
             $pObj->pic_large = 'no_pic';
             $pObj->pic_thumb = 'no_thumb';
             $pObj->added_by = Auth::id();
+            
         }
       
         
@@ -224,6 +232,7 @@ class ProductsController extends Controller
 
     private function ProductPicUpload($request,$lastid)
     {
+       
       // for seeing the picture info
       $picinfo = $request->file('picture'); // for showing the total pic info
       // print_r($picinfo);  // for showing the total pic info

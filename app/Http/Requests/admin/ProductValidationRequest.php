@@ -24,13 +24,14 @@ class ProductValidationRequest extends FormRequest
     public function rules()
     {
        
-        // dd($this->all()); 
+        //  dd($this->all()); 
         $ValueArray = $this->DynamicValues();
        // $countryid=$this->countryid; 
         
         $EditableProductId = $this->EditableProductId;
        
         if($this->hasFile('picture')){
+          
             $picFieldName = 'picture';
             $picVaidationProperty = "required|image|mimes:$ValueArray[picture_type]|max:$ValueArray[picture_size]";
            
@@ -45,7 +46,7 @@ class ProductValidationRequest extends FormRequest
         return [
             //'countryid' => "required",
             'category_id' => "required",
-            'producty_type_id' => "required",
+            'product_type_id' => "required",
             'product_name'  => "required", // here the categoryname is the variable that came from form input field name
             'description' => "required",
             'sku'  => "required",
@@ -63,7 +64,7 @@ class ProductValidationRequest extends FormRequest
         return [
            // 'countryid.required' => "$msgbox[countryid_required]",
             'category_id.required'   => "$msgbox[category_id_required]",
-            'producty_type_id.required'   => "$msgbox[producty_type_id_required]",
+            'product_type_id.required'   => "$msgbox[product_type_id_required]",
             'product_name.required' => "$msgbox[product_name_required]",
             'description.required' => "$msgbox[description_required]",
             'sku.required' => "$msgbox[sku_required]",
@@ -104,7 +105,7 @@ class ProductValidationRequest extends FormRequest
 
         $msgbox =[
             'category_id_required' => 'Please select category!',
-            'producty_type_id_required' => 'Please select product type!',
+            'product_type_id_required' => 'Please select product type!',
             
             'product_name_required' => 'Product name is required!',
             'description_required' => 'Please select descriptiond!',

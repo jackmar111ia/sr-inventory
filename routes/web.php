@@ -254,6 +254,8 @@ Route::prefix('admin')->group(function(){
         Route::get('product/list','Admin\ProductsController@list')->name('admin.product.management.list'); 
         //product update  
         Route::get('product/update/{id}','Admin\ProductsController@update')->name('admin.product.management.update');  
+         //product updsaveate  
+        Route::post('product/update','Admin\ProductsController@updateSave')->name('admin.product.management.updateSave');  
         
     });
     
