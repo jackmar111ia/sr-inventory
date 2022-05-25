@@ -150,13 +150,13 @@ Route::prefix('admin')->group(function(){
         Route::get('clients/payments/balance-sheet','Common\PaymentsController@balanaceSheetCheckFromAdmin')->name('admin.payments.management.balanace-sheet');
 
         
-       // apartments
-       /*
-       Route::get('apartment/management','Admin\ApartmentController@index')->name('admin.apartment.management');
-       Route::post('/apartment/add/save','Admin\ApartmentController@apartmentNameAddSave')->name('admin.apartment.management.add.save');
-       Route::get('/apartment/edit/{id}','Admin\ApartmentController@Edit')->name('admin.apartment.management.edit');
-       Route::post('/apartment/edit','Admin\ApartmentController@editsave')->name('admin.apartment.management.edit.save');
+       // category management
        
+       Route::get('category/management','Admin\CategoryController@index')->name('admin.category.management');
+       Route::post('/category/add/save','Admin\CategoryController@CategoryNameAddSave')->name('admin.category.management.add.save');
+       Route::get('/category/edit/{id}','Admin\CategoryController@Edit')->name('admin.category.management.edit');
+       Route::post('/category/edit','Admin\CategoryController@editsave')->name('admin.category.management.edit.save');
+       /*
        // moderator managemnet 
        Route::get('moderator/pendinglist','Admin\ModeratorManagementController@pending')->name('admin.moderators.head.user.pending');
        Route::get('moderator/approvelist','Admin\ModeratorManagementController@approved')->name('admin.moderators.head.user.approved');
@@ -185,6 +185,10 @@ Route::prefix('admin')->group(function(){
        
         Route::get('wp-data/rearrange','Admin\WPDataManagementController@rearrangeData')->name('admin.report.head.rearrange');  
 
+        // ajax route to add the product in inhouse 
+        Route::get('wp-data/add-as-inhouse','Admin\ProductsController@wpProductAddAssInhouse'); 
+        //Route::get('wp-data/ajax/ViewTypeUpdate','Admin\WPDataManagementController@ViewTypeUpdate');  
+        
         
         // download and resize image from wp image link
         Route::get('proceed/download/resize','Admin\WPDataManagementController@proceedFordownloadAndResizeWpLinkedImages')->name('admin.wpdata.manage.download.resize');  
@@ -261,6 +265,10 @@ Route::prefix('admin')->group(function(){
         // product details 
         Route::get('product/details/{id}','Admin\ProductsController@details')->name('admin.product.management.details');  
 
+        // product modal show by ajax
+        Route::get('ajax/proInfoModalShow','Admin\ProductsController@productsShowInModalByAjax')->name('product-info.show.in.modal.by.ajax');  
+
+        
          
     });
     

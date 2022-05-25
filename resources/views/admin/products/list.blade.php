@@ -4,7 +4,7 @@
 some text
 @endsection
 
-@section('page-title')
+@section('page-title')          
     {{ __('List Product') }}
 @endsection
 
@@ -16,6 +16,7 @@ some text
 @endsection
 
 @section('middle-content')
+    
     <div class="card card-topline-green">
         <div class="panel-body">
             <div class="tab-content">
@@ -26,6 +27,7 @@ some text
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Add Type</th>
                                     <th>Image</th>
                                     <th>Category</th>
                                     <th>Product Type</th>
@@ -51,10 +53,24 @@ some text
                             @foreach($products as $product)
                                         
                             <tbody>
-                                <tr class="odd gradeX">
-                                    <td>{{ $loop->iteration }}.</td>
 
-                                    <td>{{ $product->category->category }} </td>
+
+                                <tr class="odd gradeX">
+                                    <td>{{ $loop->iteration }}.
+
+                                        <button type="button" class="btn btn-primary btn-xs m-b-10 proShowAjaxBtn" data-toggle="modal" data-original-title="test" data-target="#proInfoShow" data-id="{{ $product->id}}" data-viewtype="pending">
+                                            Review Deatails
+                                        </button>
+                                    </td>
+                                    <td>
+                                        @if($product->product_add_type == "manual")
+                                        @php small_label("primary","Inhouse"); @endphp
+                                        @else
+                                        @php small_label("danger","SR Products"); @endphp
+                                        <a href="{{route('admin.wpdata.manage.single.edit',[ 'id'=>$product->id ])}}"  target="_blank">View </a>
+                                        @endif
+                                    </td>
+                                    <td> @php small_label("primary",$product->category->category); @endphp</td>
                                     <td>{{ $product->product_type->product_type }}</td>
 
                                     
@@ -84,6 +100,7 @@ some text
                                     <td class="center">
 
                                         <div class="btn-group">
+
                                             
                                                 <a href="{{ route('admin.product.management.details',['id'=> $product->id]) }}" 
                                                         class="btn btn-primary btn-xs m-b-10">
@@ -98,7 +115,7 @@ some text
                                                 Booking cancel is possible till before checkIn Date
                                                 --!-->
                                                 <a href="{{ route('admin.product.management.delete',['id'=> $product->id]) }}" 
-                                                        class="btn btn-danger btn-xs m-b-10">
+                                                        class="btn btn-danger btn-xs m-b-10" onclick="return submitconfirms()">
                                                         <i class="fa fa-times" aria-hidden="true"></i> <?php txt("Delete");?>
                                                 </a>
                                                 
@@ -133,5 +150,59 @@ some text
             </div>
         </div>  
     </div>
+
+
+    
+    {{-- pending gen info show modal--}}
+    <div class="modal fade" id="proInfoShow" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title f-w-600" id="exampleModalLabel">Product Details</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body-proInfoShow">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+   
+    {{--prodcut info show--}}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'csrftoken': '{{ csrf_token() }}'
+                }
+            });
+            // function starts
+            $(".proShowAjaxBtn").click(function() {
+
+                var proid = $(this).data('id');
+                 
+                //alert("first value " + ownerId + "And second value is " + propertyId );
+                $.ajax({
+                    method: "GET", // post does not work 
+                    url: "{{ url('admin/ajax/proInfoModalShow') }}",
+                    data: {
+                        proid: proid
+                      
+                    },
+
+                    success: function(response) {
+                        $('.modal-body-proInfoShow').html(response);
+                        // $("div#CityResShow").html(result);
+                        $('#proInfoShow').modal('show');
+
+                    }
+                });
+
+            });
+            // function ends
+        });
+    </script>
 
 @endsection

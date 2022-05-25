@@ -19,13 +19,13 @@
             @endif
 
 
-            {!! Form::open(['url' => 'admin/apartment/add/save','method'=>'post',  'role'=>'form', 'name'=>'addform']) !!}
+            {!! Form::open(['url' => 'admin/category/add/save','method'=>'post',  'role'=>'form', 'name'=>'addform']) !!}
             
                 <div class="row g-0">
-                    <div class="col-sm-2 col-md-2" style="text-align:right"><b><?php txt("Apartment Name");  ?></b></div>
+                    <div class="col-sm-2 col-md-2" style="text-align:right"><b><?php txt("Category Name");  ?></b></div>
 
                     <div class="col-6 col-md-6">  
-                        <?php inputfield("","text","apartment_name","form-control",'apartment_name','','',"Enter apartment Name",'','',"",''); ?>
+                        <?php inputfield("","text","category","form-control",'category','','',"Enter category Name",'','',"",''); ?>
                         
                     </div>
 

@@ -24,7 +24,10 @@
 	<link href="{{ asset('backends') }}/assets/css/pages/animate_page.css" rel="stylesheet">
 	<!-- Template Styles -->
     <link href="{{ asset('backends') }}/assets/css/plugins.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('backends') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
+    
+	<link href="{{ asset('backends') }}/assets/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('backends') }}/assets/css/custom.css" rel="stylesheet" type="text/css" />
+
     <link href="{{ asset('backends') }}/assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link href="{{ asset('backends') }}/assets/css/theme-color.css" rel="stylesheet" type="text/css" />
 	<!-- favicon -->

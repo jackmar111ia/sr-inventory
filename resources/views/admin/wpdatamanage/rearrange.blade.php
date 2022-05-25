@@ -37,7 +37,46 @@
                         
                         <tr id="item-{{$q1->id}}">
                             <td>{{$i}}</td>
-                            <td> <img src="{{asset($q1->resize_image)}}" width="70" target="_blank" style="align:top" ></td>
+                            <td> <img src="{{asset($q1->resize_image)}}" width="70" target="_blank" style="align:top" >
+                                
+                            <div id="selectedDataResult<?php echo $i; ?>"></div>
+
+                                <input type="checkbox" id="myCheck<?php echo $i; ?>" onclick="shortList<?php echo $i;?>()"  <?php if($q1->added_as_inhouse == "yes") echo "checked";?>> Select
+                                <input type="hidden" id="id<?php echo $i; ?>" value="{{$q1->id}}">
+                                <p id="text" style="display:none">SELECTED!</p>
+                            
+                                <script>
+                                    function shortList<?php echo $i;?>() {
+                                        var checkBox = document.getElementById("myCheck<?php echo $i; ?>");
+                                        var text = document.getElementById("text");
+                                        if (checkBox.checked == true){
+                                            text.style.display = "block";
+                                            //alert("Hello worl");
+                                            $.ajax({
+                                                method: "GET",
+                                                url: "{{ url('admin/wp-data/add-as-inhouse') }}",
+                                                data: "id="+$("#id<?php echo $i; ?>").val()+"&status=yes",
+                                                success:function(result){				
+                                                    $("div#selectedDataResult<?php echo $i;?>").html(result);
+                                                }
+                                            });	
+
+                                        } else {
+                                            text.style.display = "none";
+                                            //alert("Hello worlsdsdsd");
+                                            $.ajax({
+                                                method: "GET",
+                                                url: "{{ url('admin/wp-data/add-as-inhouse') }}",
+                                                data: "id="+$("#id<?php echo $i; ?>").val()+"&status=no",
+                                                success:function(result){				
+                                                    $("div#selectedDataResult<?php echo $i;?>").html(result);
+                                                }
+                                            });	
+                                        }
+                                    }
+                                </script>
+
+                            </td>
                             <td> {{$q1->title}}
 
                                 <br><?php echo $q1->short_des; ?>

@@ -11,10 +11,12 @@ use App\Models\admin\Year;
 use App\Models\user\otpTrack;
 use App\Models\Role;
 use App\Models\admin\Apartment;
+use App\Models\Admin\Category;
 use App\Models\admin\wpData;
 use App\Models\admin\Customers;
 use App\Models\admin\WpNonRetrived;
 use Carbon\Carbon;
+use App\Models\Admin\Products;
 
 function appname()
 {
@@ -676,10 +678,10 @@ function roleWiseUserInfo($roleId,$userid)
 }
 
 
-function apartmentsList()
+function categoryList()
 {
-    $obj = new Apartment();
-    $objMethod = $obj->apartmentsList();
+    $obj = new Category();
+    $objMethod = $obj->categoryList();
     return $objMethod;
 }
 
@@ -982,4 +984,9 @@ function linkwithfaicon(
     <?php
         return ("");
 }
+
+ function productQty($catId){
+    return Products::where('category_id',$catId)->count();
+    }
     
+

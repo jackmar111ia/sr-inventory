@@ -8,7 +8,7 @@ use App\Models\Admin\Products;
 use App\Models\Admin\Category;
 use App\Models\Admin\ProductType;
 use App\Http\Requests\admin\ProductValidationRequest;
-
+use App\Models\admin\wpData;
 use Image;
 use Auth;
 
@@ -142,7 +142,21 @@ class ProductsController extends Controller
     public function delete($id)
     {
         // unlink product image , then delete 
-        $product = Products::Find($id);
+        $product = Products::where('id',$id)->first();
+
+        if($product->product_add_type == "manual"){
+            $olpicture_large = $product->pic_large;
+            $olpicture_thumb = $product->pic_thumb;
+
+            if(file_exists($olpicture_large))
+            unlink($olpicture_large);
+    
+            // pic thumb unlink 
+            if(file_exists($olpicture_thumb))
+            unlink($olpicture_thumb);
+        }
+        
+        $product->delete(); 
        // $product->delete();
         return redirect()->route('admin.product.management.list')->with('message','Sucessfully deleted');
          
@@ -186,7 +200,7 @@ class ProductsController extends Controller
         $pObj->product_sr_id = 0;
         $pObj->supplier_sku = $request->supplier_sku;
         $pObj->supplier_description = $request->supplier_description;
-        $pObj->supplier_sku = $request->supplier_sku;
+       
         
         $pObj->inhouse_qty = $request->inhouse_qty;
         $pObj->sold_qty = $request->sold_qty;
@@ -288,5 +302,98 @@ class ProductsController extends Controller
         $q =  Products::Find($id);
         dd($q);
         
+    }
+
+    public function wpProductAddAssInhouse(){
+
+        $id = request()->get('id');
+        $status = request()->get('status');
+        $q1 = wpData::where('id',$id)->first();
+        //dd("Added $q1->wp_id",$id,$status);
+        $wp_id = $q1->wp_id;
+
+        if($status == "yes"){
+            $wp_product_id_count = Products::where('product_sr_id',$wp_id)->count();
+            if($wp_product_id_count == 0)
+            {
+                $pObj = new Products();
+                $pObj->category_id = 1;
+
+                $pObj->pic_thumb = $q1->resize_image;
+                $pObj->pic_large = $q1->resize_image;
+
+                $pObj->product_name = $q1->title;
+                $pObj->description = $q1->short_des;
+                $pObj->sku = $q1->sku;
+                $pObj->certification = '';
+                $pObj->case_qty = '';
+                $pObj->product_type_id = 1;
+                $pObj->regular_price = $q1->regular_price;
+                $pObj->ontario_price = $q1->ontario_price;
+                $pObj->canada_price = $q1->canada_price;
+                $pObj->wb_price = 0;
+                $pObj->variable_product_price = $q1->variable_product_price;
+                
+                $pObj->product_sr_id = $q1->wp_id;
+                $pObj->supplier_sku = '';
+                $pObj->supplier_description = '';
+                
+                
+                $pObj->inhouse_qty = 0;
+                $pObj->sold_qty = 0;
+                $pObj->aviable_qty = 0;
+
+                $pObj->product_add_type = "from_sr";
+               
+                $pObj->added_by = Auth::id();
+                $pObj->modified_by = Auth::id();
+                $pObj->modified_history = '';
+                $pObj->indication_color = '';
+                $pObj->indication_row_qty = 0;
+                $pObj->save();
+                // update wpData
+                $q1->added_as_inhouse = "yes";
+                $q1->save();
+                
+
+            }else{
+                echo "Already Added";
+            }
+        }else{
+           
+            $pInfo = Products::where('product_sr_id',$wp_id)->first();
+            $Products = Products::find($pInfo->id);
+            //dd($pInfo->id);
+            $Products->delete(); 
+            $q1->added_as_inhouse = "no";
+            $q1->save();
+            //echo "Deleted";
+        }
+       
+        //`category_id`,`pic_thumb`,`pic_large`,`product_name`,`description`,`sku`,`certification`,`case_qty`,`product_type_id`,`regular_price`,`ontario_price`,`canada_price`,`wb_price`,`variable_product_price`,`product_add_type`,`product_sr_id`,`supplier_sku`,`supplier_description`,`inhouse_qty`,`sold_qty`,`aviable_qty`,`added_by`,`modified_by`,`modified_history`,`indication_color`,`indication_row_qty`,`created_at`,`updated_at`
+
+        /*
+        $q1 = wpData::Find($id);
+        $q1->view_status = $status;
+        $q1->save();
+  
+       
+        if(($status == "yes") AND ($q1->image != '') AND ($q1->resize_image == '')){
+           $links = wpData::where('id',$id)->get();
+           $this->singleImageResizeAndDownload($links);
+           $option = "uploadedImgaeShow";
+           $q2 = wpData::where('id',$id)->first();
+           return view('admin.wpdatamanage.ajax.results',compact('option','q2'));
+        }
+        */
+    }
+
+    public function productsShowInModalByAjax(){
+       // dd("here");
+        $proid = $_REQUEST['proid'];
+        $products = Products::with(['category','product_type'])->where('id',$proid)->first(); 
+        //dd($proid);
+        $option = "product_show";
+        return view("admin.products.ajax_result",compact('option','products'));
     }
 }
