@@ -202,7 +202,7 @@ class ProductsController extends Controller
         $pObj->supplier_description = $request->supplier_description;
        
         
-        $pObj->inhouse_qty = $request->inhouse_qty;
+        
         $pObj->sold_qty = $request->sold_qty;
         $pObj->aviable_qty = $request->aviable_qty;
 
@@ -339,7 +339,8 @@ class ProductsController extends Controller
                 $pObj->supplier_description = '';
                 
                 
-                $pObj->inhouse_qty = 0;
+              
+                
                 $pObj->sold_qty = 0;
                 $pObj->aviable_qty = 0;
 
@@ -396,4 +397,17 @@ class ProductsController extends Controller
         $option = "product_show";
         return view("admin.products.ajax_result",compact('option','products'));
     }
+
+    public function full_width(){
+       return view("admin.products.full_width");
+     }
+
+    public function full_widthList()
+    {
+        $products = Products::with(['category','product_type'])->get(); 
+        //dd($products);
+        return view('admin.products.list_full_width',['products' => $products]);
+    }
+     
+
 }

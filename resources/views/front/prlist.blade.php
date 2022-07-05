@@ -23,7 +23,7 @@
          word-break: break-all;
         }
 </style>
- <div class="col-sm-12">
+    <div class="col-sm-12">
         <div class="card "  style="margin-top:10px">
              
             <div class="card-body">

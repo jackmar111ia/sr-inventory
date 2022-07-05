@@ -30,6 +30,9 @@ Route::get('/clear', function () {
     return "<h1> Cleared!</h1>";
  });
  
+
+
+
 Route::get('generate-pdf','Admin\PDFController@generatePDF');
 //Route::get('report-pdf/{type}','Admin\ReportsController@downloadpdf')->name('pr-pdf-download');
 Route::get('report-pdf/{type}',array('as'=>'pdfview','uses'=>'Admin\ReportsController@downloadpdf'));
@@ -256,6 +259,10 @@ Route::prefix('admin')->group(function(){
          // product type wise price entry field 
         // Route::get('product/save','Admin\ProductsController@save')->name('admin.product.management.save');  
         Route::get('product/list','Admin\ProductsController@list')->name('admin.product.management.list'); 
+        // product-list full width
+        //Route::get('full-width','Admin\ProductsController@full_width');
+        Route::get('product/list/full-width','Admin\ProductsController@full_widthList')->name('admin.product.management.list.fullwidth'); 
+
         //product update  
         Route::get('product/update/{id}','Admin\ProductsController@update')->name('admin.product.management.update');  
          //product updsaveate  

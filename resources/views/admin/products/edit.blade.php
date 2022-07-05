@@ -151,19 +151,16 @@ some text
                     </div>
 
                     <div class="form-group">
-                        <?php  inputfield("Inhouse Qty","text","inhouse_qty","form-control",'inhouse_qty',$EditableRow->inhouse_qty,'',"0",'','',"","'','','','',$errors");   ?>
-                        @php isError($errors,'inhouse_qty') @endphp
+                        <?php  inputfield("Avialable Qty","text","aviable_qty","form-control",'aviable_qty',$EditableRow->aviable_qty,'',"0",'','',"","'','','','',$errors");   ?>
+                        @php isError($errors,'aviable_qty') @endphp
                     </div>
-
+                    
                     <div class="form-group">
                         <?php  inputfield("Sold Qty","text","sold_qty","form-control",'sold_qty',$EditableRow->sold_qty,'',"0",'','',"","'','','','',$errors");   ?>
                         @php isError($errors,'sold_qty') @endphp
                     </div>
 
-                    <div class="form-group">
-                        <?php  inputfield("Avialable Qty","text","aviable_qty","form-control",'aviable_qty',$EditableRow->aviable_qty,'',"0",'','',"","'','','','',$errors");   ?>
-                        @php isError($errors,'aviable_qty') @endphp
-                    </div>
+                   
 
                     
 

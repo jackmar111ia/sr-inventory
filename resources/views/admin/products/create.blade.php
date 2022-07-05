@@ -149,23 +149,14 @@ some text
                     </div>
 
                     <div class="form-group">
-                        <?php  inputfield("Inhouse Qty","text","inhouse_qty","form-control",'regular_price','','',"0",'','',"","'','','','',$errors");   ?>
-                        @php isError($errors,'inhouse_qty') @endphp
+                        <?php  inputfield("Avialable Qty","text","aviable_qty","form-control",'regular_price','','',"0",'','',"","'','','','',$errors");   ?>
+                        @php isError($errors,'aviable_qty') @endphp
                     </div>
-
                     <div class="form-group">
                         <?php  inputfield("Sold Qty","text","sold_qty","form-control",'regular_price','','',"0",'','',"","'','','','',$errors");   ?>
                         @php isError($errors,'sold_qty') @endphp
                     </div>
 
-                    <div class="form-group">
-                        <?php  inputfield("Avialable Qty","text","aviable_qty","form-control",'regular_price','','',"0",'','',"","'','','','',$errors");   ?>
-                        @php isError($errors,'aviable_qty') @endphp
-                    </div>
-
-                    
-
-                 
                     <div class="form-group">
                         <?php submitBtn('','success',"Submit",'');?>
                         <input type="hidden" value="0" name="EditableProductId" id="0">
