@@ -9,6 +9,8 @@ use App\Models\Admin\Category;
 use App\Models\Admin\ProductType;
 use App\Http\Requests\admin\ProductValidationRequest;
 use App\Models\admin\wpData;
+use App\Hotel;
+
 use Image;
 use Auth;
 
@@ -23,9 +25,12 @@ class ProductsController extends Controller
 
     public function list()
     {
+        $hotels = Category::all();
+         
+       
         $products = Products::with(['category','product_type'])->get(); 
         //dd($products);
-        return view('admin.products.list',['products' => $products]);
+        return view('admin.products.list',compact('products','hotels'));
     }
     
     public function save(ProductValidationRequest $request)
@@ -404,10 +409,31 @@ class ProductsController extends Controller
 
     public function full_widthList()
     {
+        $hotels = Category::all();
+         
         $products = Products::with(['category','product_type'])->get(); 
         //dd($products);
-        return view('admin.products.list_full_width',['products' => $products]);
+        return view('admin.products.list_full_width',compact('products','hotels'));
     }
+
+    public function productColorUpdate(){
+       
+        $id = $_REQUEST['id'];
+        $id = $_REQUEST['color'];
+        $hotel = Category::find($id);
+        $hotel->color = $color;
+        $hotel->save();
+        
+    }
+   
+    public function colorUpdate($id,$color){
+        $hotel = Products::find($id);
+        $hotel->indication_color = $color;
+        $hotel->save();
+        
+    }
+
+
      
 
 }

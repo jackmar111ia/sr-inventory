@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.21-MariaDB : Database - simplyretrofits_api
+MySQL - 10.4.24-MariaDB : Database - simplyretrofits_api
 *********************************************************************
 */
 
@@ -38,7 +38,7 @@ CREATE TABLE `admins` (
 /*Data for the table `admins` */
 
 insert  into `admins`(`id`,`name`,`role`,`email`,`email_verified_at`,`password`,`remember_token`,`status`,`created_at`,`updated_at`) values 
-(1,'Administration',1,'admin@gmail.com',NULL,'$2y$10$d1DXBgrxl3GB9bjiv4MAJOlydeq7fc2T3A4S.lF7yPsaw9cEewAbi','HcXV5H7opTBhl2V7h1etybdn1aFZG96pmYzvqIeUhdfutJTplFzF7NmSpFN5','active','2021-08-02 12:48:23','2022-03-21 07:16:15'),
+(1,'Administration',1,'admin@gmail.com',NULL,'$2y$10$d1DXBgrxl3GB9bjiv4MAJOlydeq7fc2T3A4S.lF7yPsaw9cEewAbi','vcMokrs4usLvid951iU7yihN9Zd897GXpjWQIDetgreIdTw3PVxPGLDqj65d','active','2021-08-02 12:48:23','2022-03-21 07:16:15'),
 (2,'Seema',5,'admin2@gmail.com',NULL,'$2y$10$0rpsujg.6TavXsF/a8YMMOBC72upo78v0BQKYpA7zpB0WZZVHo5fG',NULL,'active',NULL,NULL);
 
 /*Table structure for table `apartments` */
@@ -71,6 +71,7 @@ DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `category` varchar(250) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color` varchar(250) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `addedby` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -79,11 +80,11 @@ CREATE TABLE `categories` (
 
 /*Data for the table `categories` */
 
-insert  into `categories`(`id`,`category`,`addedby`,`created_at`,`updated_at`) values 
-(1,'Residential',1,NULL,'2022-05-25 19:42:47'),
-(2,'Commercial',1,NULL,'2022-05-25 19:46:15'),
-(3,'Normal',1,'2022-05-25 15:59:53','2022-05-25 16:05:44'),
-(4,'Other',2,'2022-05-25 19:44:30','2022-05-25 19:44:51');
+insert  into `categories`(`id`,`category`,`color`,`addedby`,`created_at`,`updated_at`) values 
+(1,'Residential','000000',1,NULL,'2022-07-06 18:43:32'),
+(2,'Commercial','000000',1,NULL,'2022-07-06 18:43:32'),
+(3,'Normal','000000',1,'2022-05-25 15:59:53','2022-07-06 18:43:30'),
+(4,'Other','000000',2,'2022-05-25 19:44:30','2022-07-06 18:41:52');
 
 /*Table structure for table `client_updates` */
 
@@ -299,6 +300,26 @@ CREATE TABLE `failed_jobs` (
 
 /*Data for the table `failed_jobs` */
 
+/*Table structure for table `hotels` */
+
+DROP TABLE IF EXISTS `hotels`;
+
+CREATE TABLE `hotels` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `hotels` */
+
+insert  into `hotels`(`id`,`name`,`color`,`created_at`,`updated_at`) values 
+(1,'Hotel A','474343',NULL,'2022-07-06 18:31:09'),
+(2,'Hotel B','474343',NULL,'2022-07-06 18:31:12'),
+(3,'Hotel C','474343',NULL,'2022-07-06 18:31:12');
+
 /*Table structure for table `layouts` */
 
 DROP TABLE IF EXISTS `layouts`;
@@ -331,7 +352,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `migrations` */
 
@@ -360,7 +381,8 @@ insert  into `migrations`(`id`,`migration`,`batch`) values
 (55,'2022_04_09_190827_create_not_inserted_wp_datas_table',30),
 (57,'2022_05_20_145330_create_categories_table',31),
 (60,'2022_05_20_153908_create_product_types_table',32),
-(62,'2022_05_20_135827_create_products_table',33);
+(62,'2022_05_20_135827_create_products_table',33),
+(63,'2022_07_06_155603_create_hotels_table',34);
 
 /*Table structure for table `moderator_updates` */
 
@@ -488,7 +510,7 @@ CREATE TABLE `navigation` (
   `oparationType` varchar(15) DEFAULT NULL,
   `usedType` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=152 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
 
 /*Data for the table `navigation` */
 
@@ -643,7 +665,8 @@ insert  into `navigation`(`id`,`menu_name`,`menu_step`,`parent`,`morder`,`down_l
 (148,'Create',1,147,5,'no','147,148','product_create','publish','fa fa-plus','admin.product.management.create','no','','no_title','admin',NULL,NULL),
 (149,'List',1,147,10,'no','147,149','product_list','publish','fa fa-list','admin.product.management.list','no','','no_title','admin',NULL,NULL),
 (150,'Update',1,147,15,'no','147,150','product_update','unpublish','fa fa-pencil','admin.product.management.update','yes','','no_title','admin',NULL,NULL),
-(151,'Details',1,147,20,'no','147,151','product_details','unpublish','fa fa-search','admin.product.management.details','yes','','no_title','admin',NULL,NULL);
+(151,'Details',1,147,20,'no','147,151','product_details','unpublish','fa fa-search','admin.product.management.details','yes','','no_title','admin',NULL,NULL),
+(152,'Product List',1,147,11,'no','147,152','product_list_full_width','publish','fa fa-list','admin.product.management.list.fullwidth','no','','no_title','admin',NULL,NULL);
 
 /*Table structure for table `not_inserted_wp_datas` */
 
@@ -835,12 +858,12 @@ CREATE TABLE `products` (
 /*Data for the table `products` */
 
 insert  into `products`(`id`,`category_id`,`pic_thumb`,`pic_large`,`product_name`,`description`,`sku`,`certification`,`case_qty`,`product_type_id`,`regular_price`,`ontario_price`,`canada_price`,`wb_price`,`variable_product_price`,`product_add_type`,`product_sr_id`,`supplier_sku`,`supplier_description`,`sold_qty`,`aviable_qty`,`added_by`,`modified_by`,`modified_history`,`indication_color`,`indication_row_qty`,`created_at`,`updated_at`) values 
-(27,3,'public/images/productImages/thumb/th_27_1653665368.jpg','public/images/productImages/large/27_1653665368.jpg','4\" GIMBAL 3CCT','<p><span data-sheets-value=\"{&quot;1&quot;:2,&quot;2&quot;:&quot;4\\&quot; GIMBAL 3CCT\\n10W-750LM- 120V \\n3 CCT-3000K/4000k/5000k Adjustable, Dimmable, 3 year Warranty- Black/White&quot;}\" data-sheets-userformat=\"{&quot;2&quot;:11263,&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:14743546},&quot;5&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;6&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;7&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;8&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;9&quot;:1,&quot;10&quot;:1,&quot;11&quot;:4,&quot;12&quot;:0,&quot;14&quot;:{&quot;1&quot;:2,&quot;2&quot;:0},&quot;16&quot;:12}\" data-sheets-textstyleruns=\"{&quot;1&quot;:0,&quot;2&quot;:{&quot;2&quot;:{&quot;1&quot;:2,&quot;2&quot;:255},&quot;5&quot;:1}}{&quot;1&quot;:15}\" style=\"font-size: 12pt; font-family: Arial; text-align: center;\"><span style=\"font-size: 12pt;\">10W-750LM- 120V<br>3 CCT-3000K/4000k/5000k Adjustable, Dimmable, 3 year Warranty- Black/White</span></span><br></p>','<p><span data-sheets-value=\"{&quot;1&quot;:2,&quot;2&quot;:&quot;VT1048&quot;}\" data-sheets-userformat=\"{&quot;2&quot;:11263,&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:14743546},&quot;5&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;6&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;7&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;8&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;9&quot;:1,&quot;10&quot;:1,&quot;11&quot;:4,&quot;12&quot;:0,&quot;14&quot;:{&quot;1&quot;:2,&quot;2&quot;:0},&quot;16&quot;:10}\" style=\"font-size: 10pt; font-family: Arial; text-align: center;\">VT1048</span><br></p>',NULL,NULL,1,34.56,0.00,0.00,NULL,NULL,'manual',0,NULL,NULL,NULL,NULL,1,1,'','',0,'2022-05-27 15:29:28','2022-05-27 15:29:28'),
-(28,1,'thumbnail/Wall-Pack-1-min-1140x1412-122681_1.jpg','thumbnail/Wall-Pack-1-min-1140x1412-122681_1.jpg','120W Wall Pack (100-347V)','<p>Power:120W<br>\r\nInput Voltage: AC100-347V<br>\r\nPower Factor: 0.9<br><br></p>','VT7115','','',1,219.00,179.00,189.00,0.00,'','from_sr',22681,'','',0,0,1,1,'','',0,'2022-05-27 15:29:42','2022-05-27 15:29:42'),
-(29,1,'thumbnail/80-w-wall-pack-Simplyretrofits22679_3.jpg','thumbnail/80-w-wall-pack-Simplyretrofits22679_3.jpg','80W LED Wall Pack (100-347V)','<p style=\"text-align: left\">Power:80W<br />\nInput Voltage: AC100-347V<br />\nPower Factor: 0.9<br />\nBrightness: 9300-10400LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p style=\"text-align: left\"><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/80W-Specifications.pdf\">Download Specifications</a></p>\n<p style=\"text-align: left\">\n','VT7113','','',1,179.99,149.99,159.99,0.00,'','from_sr',22679,'','',0,0,1,1,'','',0,'2022-05-27 15:29:44','2022-05-27 15:29:44'),
-(31,1,'thumbnail/Wall-Pack-1-min-1-1140x1412-122680_2.jpg','thumbnail/Wall-Pack-1-min-1-1140x1412-122680_2.jpg','100W LED Wall Pack (100-347V)','<p>Power:100W<br />\nInput Voltage: AC100-347V<br />\nPower Factor: &amp;gt;0.9<br />\nBrightness: 12000-13500LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/Brochure-final-one-2.pdf\">Download Product Specifications</a></p>\n','VT7114','','',1,199.00,159.99,175.00,0.00,'','from_sr',22680,'','',0,0,1,1,'','',0,'2022-05-27 15:29:48','2022-05-27 15:29:48'),
-(32,1,'thumbnail/Regular-Wallpack2-Simplyretrofits22660_5.jpg','thumbnail/Regular-Wallpack2-Simplyretrofits22660_5.jpg','Regular Wall Pack 120W (120-347v)','<ul>\r\n<li>Power: 120W</li>\r\n<li>Input Voltage: AC120-347V</li>\r\n<li>Power Factor: &gt;0.9</li>\r\n<li>Brightness: 15600-17400 LM</li>\r\n<li>Cover: Glass</li>\r\n<li>CCT: 5000K</li>\r\n<li>Beam Angle: 110°</li></ul>','VT2111','','',1,199.00,169.00,179.00,0.00,'','from_sr',22660,'','',0,0,1,1,'','',0,'2022-05-27 15:29:50','2022-05-27 15:29:50'),
-(34,1,'thumbnail/Wall-Pack-1-min-1-1140x1412-copy22675_4.jpg','thumbnail/Wall-Pack-1-min-1-1140x1412-copy22675_4.jpg','60W LED Wall Pack (100-347V)','<p>Power:60W<br />\nInput Voltage: AC100-347V/AC277-480V<br />\nPower Factor: &amp;gt;0.9<br />\nBrightness: 7200-8100LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/Brochure-final-one-2.pdf\">Download Product Specifications</a></p>\n','VT7112','','',1,159.99,129.99,139.99,0.00,'','from_sr',22675,'','',0,0,1,1,'','',0,'2022-05-27 15:29:54','2022-05-27 15:29:54');
+(27,3,'public/images/productImages/thumb/th_27_1653665368.jpg','public/images/productImages/large/27_1653665368.jpg','4\" GIMBAL 3CCT','<p><span data-sheets-value=\"{&quot;1&quot;:2,&quot;2&quot;:&quot;4\\&quot; GIMBAL 3CCT\\n10W-750LM- 120V \\n3 CCT-3000K/4000k/5000k Adjustable, Dimmable, 3 year Warranty- Black/White&quot;}\" data-sheets-userformat=\"{&quot;2&quot;:11263,&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:14743546},&quot;5&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;6&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;7&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;8&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;9&quot;:1,&quot;10&quot;:1,&quot;11&quot;:4,&quot;12&quot;:0,&quot;14&quot;:{&quot;1&quot;:2,&quot;2&quot;:0},&quot;16&quot;:12}\" data-sheets-textstyleruns=\"{&quot;1&quot;:0,&quot;2&quot;:{&quot;2&quot;:{&quot;1&quot;:2,&quot;2&quot;:255},&quot;5&quot;:1}}{&quot;1&quot;:15}\" style=\"font-size: 12pt; font-family: Arial; text-align: center;\"><span style=\"font-size: 12pt;\">10W-750LM- 120V<br>3 CCT-3000K/4000k/5000k Adjustable, Dimmable, 3 year Warranty- Black/White</span></span><br></p>','<p><span data-sheets-value=\"{&quot;1&quot;:2,&quot;2&quot;:&quot;VT1048&quot;}\" data-sheets-userformat=\"{&quot;2&quot;:11263,&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:14743546},&quot;5&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;6&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;7&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;8&quot;:{&quot;1&quot;:[{&quot;1&quot;:2,&quot;2&quot;:0,&quot;5&quot;:{&quot;1&quot;:2,&quot;2&quot;:0}},{&quot;1&quot;:0,&quot;2&quot;:0,&quot;3&quot;:3},{&quot;1&quot;:1,&quot;2&quot;:0,&quot;4&quot;:1}]},&quot;9&quot;:1,&quot;10&quot;:1,&quot;11&quot;:4,&quot;12&quot;:0,&quot;14&quot;:{&quot;1&quot;:2,&quot;2&quot;:0},&quot;16&quot;:10}\" style=\"font-size: 10pt; font-family: Arial; text-align: center;\">VT1048</span><br></p>',NULL,NULL,1,34.56,0.00,0.00,NULL,NULL,'manual',0,NULL,NULL,NULL,NULL,1,1,'','2647ed',0,'2022-05-27 15:29:28','2022-07-06 20:34:21'),
+(28,1,'thumbnail/Wall-Pack-1-min-1140x1412-122681_1.jpg','thumbnail/Wall-Pack-1-min-1140x1412-122681_1.jpg','120W Wall Pack (100-347V)','<p>Power:120W<br>\r\nInput Voltage: AC100-347V<br>\r\nPower Factor: 0.9<br><br></p>','VT7115','','',1,219.00,179.00,189.00,0.00,'','from_sr',22681,'','',0,0,1,1,'','2647ed',0,'2022-05-27 15:29:42','2022-07-06 20:34:23'),
+(29,1,'thumbnail/80-w-wall-pack-Simplyretrofits22679_3.jpg','thumbnail/80-w-wall-pack-Simplyretrofits22679_3.jpg','80W LED Wall Pack (100-347V)','<p style=\"text-align: left\">Power:80W<br />\nInput Voltage: AC100-347V<br />\nPower Factor: 0.9<br />\nBrightness: 9300-10400LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p style=\"text-align: left\"><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/80W-Specifications.pdf\">Download Specifications</a></p>\n<p style=\"text-align: left\">\n','VT7113','','',1,179.99,149.99,159.99,0.00,'','from_sr',22679,'','',0,0,1,1,'','2647ed',0,'2022-05-27 15:29:44','2022-07-06 20:34:24'),
+(31,1,'thumbnail/Wall-Pack-1-min-1-1140x1412-122680_2.jpg','thumbnail/Wall-Pack-1-min-1-1140x1412-122680_2.jpg','100W LED Wall Pack (100-347V)','<p>Power:100W<br />\nInput Voltage: AC100-347V<br />\nPower Factor: &amp;gt;0.9<br />\nBrightness: 12000-13500LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/Brochure-final-one-2.pdf\">Download Product Specifications</a></p>\n','VT7114','','',1,199.00,159.99,175.00,0.00,'','from_sr',22680,'','',0,0,1,1,'','2647ed',0,'2022-05-27 15:29:48','2022-07-06 20:34:25'),
+(32,1,'thumbnail/Regular-Wallpack2-Simplyretrofits22660_5.jpg','thumbnail/Regular-Wallpack2-Simplyretrofits22660_5.jpg','Regular Wall Pack 120W (120-347v)','<ul>\r\n<li>Power: 120W</li>\r\n<li>Input Voltage: AC120-347V</li>\r\n<li>Power Factor: &gt;0.9</li>\r\n<li>Brightness: 15600-17400 LM</li>\r\n<li>Cover: Glass</li>\r\n<li>CCT: 5000K</li>\r\n<li>Beam Angle: 110°</li></ul>','VT2111','','',1,199.00,169.00,179.00,0.00,'','from_sr',22660,'','',0,0,1,1,'','2647ed',0,'2022-05-27 15:29:50','2022-07-06 20:34:26'),
+(34,1,'thumbnail/Wall-Pack-1-min-1-1140x1412-copy22675_4.jpg','thumbnail/Wall-Pack-1-min-1-1140x1412-copy22675_4.jpg','60W LED Wall Pack (100-347V)','<p>Power:60W<br />\nInput Voltage: AC100-347V/AC277-480V<br />\nPower Factor: &amp;gt;0.9<br />\nBrightness: 7200-8100LM<br />\nCover: Glass<br />\nCCT: 5000K<br />\nBeam Angle: 110°<br />\nDimension: 14.25×9.37×9.84 Inch</p>\n<p><a href=\"https://www.simplyretrofits.com/wp-content/uploads/2020/07/Brochure-final-one-2.pdf\">Download Product Specifications</a></p>\n','VT7112','','',1,159.99,129.99,139.99,0.00,'','from_sr',22675,'','',0,0,1,1,'','2647ed',0,'2022-05-27 15:29:54','2022-07-06 20:34:19');
 
 /*Table structure for table `roles` */
 

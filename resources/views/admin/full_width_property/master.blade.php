@@ -738,9 +738,10 @@
 	*/ ?>
     <!-- end page container -->
     <!-- start footer -->
+	<?php /*
     <div class="page-footer">
 		@include('moderator.includes.footer')
-    </div>
+    </div> */?>
     <!-- end footer -->
     <!-- start js include path -->
     <!--<script src="{{ asset('backends2') }}/assets/plugins/jquery/jquery.min.js" ></script>--->

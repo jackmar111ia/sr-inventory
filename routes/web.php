@@ -33,6 +33,9 @@ Route::get('/clear', function () {
 
 
 
+ Route::get('update/{id}/{color}', 'TestController@update');
+
+
 Route::get('generate-pdf','Admin\PDFController@generatePDF');
 //Route::get('report-pdf/{type}','Admin\ReportsController@downloadpdf')->name('pr-pdf-download');
 Route::get('report-pdf/{type}',array('as'=>'pdfview','uses'=>'Admin\ReportsController@downloadpdf'));
@@ -134,6 +137,10 @@ Route::middleware(['auth:web'])->group(function(){
 
 
 Route::prefix('admin')->group(function(){
+    
+    Route::get('/test','TestController@index');
+    Route::get('/product-full-width','Admin\ProductsController@full_widthList')->name('admin.product.management.list.fullwidth'); 
+    Route::get('/update1/{id}/{color}', 'Admin\ProductsController@colorUpdate');
 
     Route::get('/login','Auth\AdminLoginController@ShowLoginForm')->name('admin.login');
     Route::post('/login','Auth\AdminLoginController@login')->name('admin.login.submit'); 
@@ -261,8 +268,7 @@ Route::prefix('admin')->group(function(){
         Route::get('product/list','Admin\ProductsController@list')->name('admin.product.management.list'); 
         // product-list full width
         //Route::get('full-width','Admin\ProductsController@full_width');
-        Route::get('product/list/full-width','Admin\ProductsController@full_widthList')->name('admin.product.management.list.fullwidth'); 
-
+        
         //product update  
         Route::get('product/update/{id}','Admin\ProductsController@update')->name('admin.product.management.update');  
          //product updsaveate  
