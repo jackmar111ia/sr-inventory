@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin\Products;
-use App\Models\Admin\Category;
-use App\Models\Admin\ProductType;
+use App\Models\admin\Products;
+use App\Models\admin\Category;
+use App\Models\admin\ProductType;
 use App\Http\Requests\admin\ProductValidationRequest;
 use App\Models\admin\wpData;
 use App\Hotel;

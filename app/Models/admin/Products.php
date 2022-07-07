@@ -10,12 +10,12 @@ class Products extends Model
 
     public function category()
     { 
-      return $this->belongsTo('App\Models\Admin\Category','category_id'); 
+      return $this->belongsTo('App\Models\admin\Category','category_id'); 
     }
 
     public function product_type()
     { 
-       return $this->belongsTo('App\Models\Admin\ProductType','product_type_id'); 
+       return $this->belongsTo('App\Models\admin\ProductType','product_type_id'); 
     }
 
 }

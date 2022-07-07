@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin\Category;
+use App\Models\admin\Category;
 use Auth;
 use Carbon\Carbon;
 class CategoryController extends Controller
