@@ -62,6 +62,19 @@
       $sku = $row['sku'];
       $type = $row['type'];
 
+      $hubspotpdes = '';
+      // catch hubspot product description 
+      foreach( $row['meta_data'] as $arr ){
+        if($arr['key'] == "_technical_specs"){
+        // $canada_price = $row['meta_data'][6]['value'];
+        $hubspotpdes = $arr['value'];
+          
+         // 
+         //$hubspotpdes = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $hubspotpdes));
+         
+        }
+      }
+
       if($row['type'] == "variable"){
         $variable_product_price = $row['price_html'];
         $regular_price = 0;
@@ -87,8 +100,34 @@
              
           }
       }
+
+      $cats = '';
+   
+      $categoryQty = 0; $commAbrNo = 0;
+      $categoryQty = count($row['categories']);
+      $commAbrNo = $categoryQty - 1;
       
-      $sql = $insertdata->insert_wp_data($wp_id,$title,$permalink,$image,$short_des,$sku,$type,$variable_product_price,$regular_price,$canada_price,$ontario_price,'','');
+      $j = 0; 
+      while($j < $categoryQty){
+        
+         if($row['categories'][$j]['name'] == "")
+           {   $j = $j - 1; break;}
+         else 
+         {
+          if($j == $commAbrNo){
+            $cats = $cats.$row['categories'][$j]['name'];
+          }else{
+            $cats = $cats.$row['categories'][$j]['name']."<br>";
+          }
+         
+           $j = $j + 1;
+           
+         }
+   
+      }
+      //$cats = $categoryQty.",".$cats;
+      //echo $cats;
+      $sql = $insertdata->insert_wp_data($wp_id,$title,$permalink,$image,$short_des,$sku,$type,$variable_product_price,$regular_price,$canada_price,$ontario_price,$cats,$hubspotpdes);
      // echo "inserted $row[id]<br>";
       if(!$sql){
         $sql = $insertdata->notInsertedWpIds($wp_id,$title,$permalink);

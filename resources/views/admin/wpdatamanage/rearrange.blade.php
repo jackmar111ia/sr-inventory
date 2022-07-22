@@ -39,7 +39,7 @@
                             <td>{{$i}}</td>
                             <td> <img src="{{asset($q1->resize_image)}}" width="70" target="_blank" style="align:top" >
                                 
-                            <div id="selectedDataResult<?php echo $i; ?>"></div>
+                                <div id="selectedDataResult<?php echo $i; ?>"></div>
 
                                 <input type="checkbox" id="myCheck<?php echo $i; ?>" onclick="shortList<?php echo $i;?>()"  <?php if($q1->added_as_inhouse == "yes") echo "checked";?>> Select
                                 <input type="hidden" id="id<?php echo $i; ?>" value="{{$q1->id}}">

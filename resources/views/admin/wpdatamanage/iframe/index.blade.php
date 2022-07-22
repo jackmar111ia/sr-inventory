@@ -27,12 +27,12 @@
                     After you fetch the new data from wp database , your previous setup will not be lost.
                     <br>You will have an option to add newly fetched data with old ones.
                 </div>
-                <?php /*
+               
                 <iframe src="{{url('php_files/index.php')}}">Your browser isn't compatible</iframe>
-                */ ?>
-                 
+              
+                <?php /*
                 <a href="{{route('admin.wpdata.manage.fetched.filter')}}" onclick="return OnclickFetchConfirm()" class="btn btn-success"> Fetch Data From SR Site </a>
-                  
+                   */ ?>
                 <script  type="text/javascript">  
                     function OnclickFetchConfirm()
                     {

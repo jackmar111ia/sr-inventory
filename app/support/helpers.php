@@ -989,4 +989,14 @@ function linkwithfaicon(
     return Products::where('category_id',$catId)->count();
     }
     
+    function categoryWiseWpData($type,$categories){
+        
+        $q = wpData::where('view_type',$type)
+        ->orWhere('view_type','both')
+        ->where('categories',$categories)
+       ->where('view_status','yes')
+       ->orderBy('serial')
+       ->get(); 
+       return $q;
+    }
 

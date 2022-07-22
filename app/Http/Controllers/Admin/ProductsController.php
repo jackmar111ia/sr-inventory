@@ -309,13 +309,71 @@ class ProductsController extends Controller
         
     }
 
+    private function singleImageResizeAndDownload($links){
+        foreach ($links as $link) {
+          
+           $path = $link->image;
+           // if i get any encoded data in url, decode it
+           // dd(urldecode(basename($path)));
+           // $path2 = 'http://www.chutyrooms.com/images/'.urlencode(basename($path));
+           //$extension = strrchr( $path, '/');
+           // dd($path2);
+     
+           // get client original name
+     
+           $filename = basename($path);
+           // dd($filename);
+     
+           // get extension
+           $extension = strrchr($filename, '.');
+           // dd($extension);
+     
+           // get filename without extension
+           $name = str_replace($extension, '', $filename);
+           $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
+     
+     
+           $filename = 'thumbnail/' . $name .$link->wp_id.'_'.$link->id. '.' . 'jpg';
+     
+           $path_to = file_get_contents($path, false, stream_context_create([
+                 'ssl' => [
+                    'verify_peer'      => false,
+                    'verify_peer_name' => false,
+                 ],
+           ]));
+     
+           Image::make($path_to)->resize(200, 100, function ($constraint) {
+                 $constraint->aspectRatio();
+           })->save(public_path($filename));
+           $link->resize_image = $filename;
+     
+          
+           $link->save();
+        }
+        
+     }
+
     public function wpProductAddAssInhouse(){
 
+     
         $id = request()->get('id');
         $status = request()->get('status');
+
+        
         $q1 = wpData::where('id',$id)->first();
         //dd("Added $q1->wp_id",$id,$status);
         $wp_id = $q1->wp_id;
+
+        // image upload
+        if(($status == "yes") AND ($q1->image != '') AND ($q1->resize_image == '')){
+          
+            $links = wpData::where('id',$id)->get();   
+            $this->singleImageResizeAndDownload($links);
+            $option = "uploadedImgaeShow";
+            $q2 = wpData::where('id',$id)->first();
+        }
+
+        //dd("here");
 
         if($status == "yes"){
             $wp_product_id_count = Products::where('product_sr_id',$wp_id)->count();

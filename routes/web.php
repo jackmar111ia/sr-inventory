@@ -30,8 +30,13 @@ Route::get('/clear', function () {
     return "<h1> Cleared!</h1>";
  });
  
+// excel data import /export
+Route::get('books', 'Admin\ReportsController@index');
+Route::post('books/import', 'Admin\ReportsController@import');
+Route::get('books/export', 'Admin\ReportsController@export');
 
 
+ Route::get('pdf/check', 'Admin\ReportsController@pdfCheck');
 
  Route::get('update/{id}/{color}', 'TestController@update');
 
@@ -49,6 +54,9 @@ Route::get('conection/check', 'Admin\WPDataManagementController@connectionCheck'
 Route::get('authenticate/{email?}', 'Admin\ReportsController@myaccount');
 //Route::get('/list-show/{type?}','ReportsController\ReportsController@list')->name('list-show');
 Route::get('popular-product-pricelist/{type?}','Admin\ReportsController@list')->name('popular.product.price.list');
+
+// category wise list
+Route::get('popular-product-pricelist/categorywise/{type?}','Admin\ReportsController@categoryWiseProductList')->name('popular.product.price.list.category.wise');
 
 Route::get('denied/access','Admin\ReportsController@deniedAccess')->name('denied.access');
 

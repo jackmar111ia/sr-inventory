@@ -23,6 +23,8 @@
          word-break: break-all;
         }
 </style>
+
+
     <div class="col-sm-12">
         <div class="card "  style="margin-top:10px">
              
@@ -40,7 +42,7 @@
                     <div style="float:left; width:20%; word-break: break-all;">
                     <i class="fa fa-envelope" style="color:red" aria-hidden="true"></i>
                      <a href="mailto:<?php echo $q1->email?>">{{$q1->email}}</a> 
-                     <a href="{{url('report-pdf/canada')}}" class="btn btn-success"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download Pdf</a>
+                     <a href='{{url("report-pdf/$type")}}' class="btn btn-success"> <i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download Pdf</a>
                     </div>
                     
                     <div style="float:left; width:30%; text-align:right">

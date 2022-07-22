@@ -92,6 +92,8 @@ class WPDataManagementController extends Controller
 
          $q2->wp_ontario_price = $q1->ontario_price;
          $q2->ontario_price = $q1->ontario_price;
+         $q2->categories = $q1->categories;
+         $q2->hubspot_p_description = $q1->hubspot_p_description;
 
          if($insertType == "new"){
             $q2->view_type = '';
@@ -793,6 +795,6 @@ class WPDataManagementController extends Controller
 
   }
 
- 
+
 
 }

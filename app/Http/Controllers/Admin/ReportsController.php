@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 use App\Models\admin\wpData;
 use App\Models\admin\Layouts;
 use Codexshaper\WooCommerce\Facades\Customer;
+
+use App\Exports\WpDataExport;
+use App\Imports\WpDataImport;
+ 
+use Maatwebsite\Excel\Facades\Excel;
+
 use DB;
 use Session;
 use Auth;
@@ -203,6 +209,12 @@ public function generatePDFView($type){
  }
  
  
+    public function pdfcheck(){
+        $type= "canada";
+        $q1 = Layouts::where('list_category',$type)->first();
+        $q = wpData::where('view_type',$type)->orWhere('view_type','both')->where('view_status','yes')->orderBy('serial')->get();
+        return view('prlist_pdf',compact('q','q1','type'));
+    }
 
 
 
@@ -304,5 +316,93 @@ public function generatePDFView($type){
        public function deniedAccess(){
         return view('front.404');
        }
+
+       public function categoryWiseProductList($type = null){
+         
+            if($type == "ontario"){
+                $qtype= "ontario_view";
+                $type = "ontario";
+            }
+            else {
+                $qtype= "canada_view";
+                $type = "canada";
+            }
+        
+            // dd($type,$qtype);
+            $q1 = Layouts::where('list_category',$type)->first();
+        
+        
+            //dd($q1);
+            if($q1->sort_category == "price"){
+                if($type == "canada")
+                $sort_category = "canada_price";
+                else
+                $sort_category = "ontario_price";
+        
+                $sort_type = $q1->sort_type;
+            }
+            
+            $q0 = wpData::where('view_type',$type)
+                            ->orWhere('view_type','both')
+                            ->where('view_status','yes')
+                            ->groupBy('categories')
+                            ->get();
+                           
+            /*foreach($q0 as $q2){
+                $excludedCategories = str_replace("<br>",",",$q2->categories);
+                echo "<h2>$excludedCategories</h1>";
+                echo "<br>";
+                $q = categoryWiseWpData($type,$q2->categories);
+                 
+                    foreach($q as $q3){
+                        echo $q3->title."<br>";
+                    }
+            }*/
+
+            //dd($q0);
+            //$q = wpData::where($qtype,'yes')->orderBy($sort_category,$sort_type)->paginate(10);
+            $q = wpData::where('view_type',$type)->orWhere('view_type','both')->where('view_status','yes')->orderBy('serial')->get();
+            //dd($q);
+            return view('front.categoryWisePrlist',compact('q0','q','q1','type'));
+         
+          
+       }
+
+
+       public function index()
+       {
+           $q = wpData::all();
+   
+           return view('admin.reports.excel.wpDataShowForExport')->with('books', $q);
+       }
+   
+       /**
+        * Import function
+        */
+       public function import(Request $request)
+       {
+           if ($request->file('imported_file')) {
+               Excel::import(new BooksImport(), request()->file('imported_file'));
+               return back();
+           }
+       }
+   
+   
+       /**
+        * Export function
+        */
+       public function export()
+       {
+        $response = Excel::download(new WpDataExport, 'books.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+        ob_end_clean();
+    
+        return $response;
+
+           //return Excel::download(new WpDataExport(), 'books.xlsx');
+       }
+
+       
+
+       
 
 }
