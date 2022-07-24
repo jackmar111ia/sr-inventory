@@ -112,7 +112,7 @@
                             </td>  
                             <td ><a href="<?php echo $q1->permalink; ?>" target="_blank">{{ $q1->title }}</a>
                              <br> 
-                             <?php echo $q1->short_des; ?>
+                             <?php echo $q1->hubspot_p_description_local; ?>
                             </div>
                              <?php clear();?>
                             </td>    

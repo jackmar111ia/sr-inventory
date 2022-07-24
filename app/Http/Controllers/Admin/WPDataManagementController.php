@@ -94,6 +94,8 @@ class WPDataManagementController extends Controller
          $q2->ontario_price = $q1->ontario_price;
          $q2->categories = $q1->categories;
          $q2->hubspot_p_description = $q1->hubspot_p_description;
+         $q2->hubspot_p_description_local = $q1->hubspot_p_description_local;
+        
 
          if($insertType == "new"){
             $q2->view_type = '';
@@ -151,7 +153,8 @@ class WPDataManagementController extends Controller
      
      // dd($request->all());
       $from = $request->from;  $to = $request->to;
-      $id = []; $title = []; $des = []; $rp = []; $cp = []; $op = []; $sku = []; $vprice = [];
+      $id = []; $title = []; $des = []; $rp = []; $cp = []; $op = []; $sku = []; $vprice = []; 
+      $hubspot_p_description_local = [];
       $view_type = [];
       //dd($request->all());
       $idQty = $request->id;
@@ -213,6 +216,15 @@ class WPDataManagementController extends Controller
             array_push($vprice, $q); 
             } 
       }
+      
+
+      // hupspot product price retrieve
+      if($request->hubspot_p_description_local!=''){
+         foreach($request->hubspot_p_description_local as $q){
+            array_push($hubspot_p_description_local, $q); 
+            } 
+      }
+
       /*
        // view_type retrieve
        if($request->view_type!=''){
@@ -237,6 +249,8 @@ class WPDataManagementController extends Controller
          $q->ontario_price = $op[$i];
          if($q->type == "variable")
          $q->variable_product_price = $vprice[$i];
+
+         $q->hubspot_p_description_local = $hubspot_p_description_local[$i];
          
           //$q->view_type = $view_type[$i];
          $q->save();

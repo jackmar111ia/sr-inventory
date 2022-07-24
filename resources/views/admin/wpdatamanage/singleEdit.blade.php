@@ -10,7 +10,13 @@
 @endsection
 
 @section('middle-content')
- 
+     <!----editor content--->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('backends/property_editor/src') }}/css/site.css">
+    <link rel="stylesheet" href="{{ asset('backends/property_editor/src') }}/richtext.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{{ asset('backends/property_editor/src') }}/jquery.richtext.js"></script>
+    <!----editor content---> 
    
 <div class="card card-topline-green">
     <div class="panel-body">
@@ -104,7 +110,13 @@
                             <?php textareaBox("","title[]",'','','Please write if you have any additional message','3','',$q1->title,'',''); ?>
                         <div style="width:400px">
                         <b>Short description</b> 
-                        <?php textareaEditor("","des[]",'summernote','','','',2,3,$q1->short_des,'required',''); ?>
+                        <?php textareaEditor("","des[]","short_des",'','','',2,3,$q1->short_des,'required',''); ?>
+                       <?php clear();?>
+                       <b>Hubspot product description</b>  
+                        <?php textareaBox("","hubspot_p_description_local[]",'','','Please enter hubspot product dexcription','10','',$q1->hubspot_p_description_local,'',''); ?>
+                          
+                            
+                       
                         <input type="hidden" name="id[]" value="{{$q1->id}}">
                         </div>
                         <?php clear();?>
@@ -123,7 +135,7 @@
                             <b>Ontario Price</b> <br>
                             <?php  inputfield("","text","op[]","form-control",'name',$q1->ontario_price,'',"",'','',"","'','','','',$errors");   ?>
                             <b>Variable Product Price</b> <br>
-                            <?php textareaEditor("","vprice[]",'summernote','','','',2,3,$q1->variable_product_price,'',''); ?>
+                            <?php textareaEditor("","vprice[]","variable_price",'','','',2,3,$q1->variable_product_price,'',''); ?>
                         </td>
                     
                     </tr>  
@@ -140,7 +152,14 @@
     
 </div>
 
-    
+<script>
+    $(document).ready(function() {
+        $(".short_des").richText();
+        $(".variable_price").richText();
+        
+    });
+</script>
+<?php /*
 <script type="text/javascript">
       $(document).ready(function() {
         $('.summernote').summernote();
@@ -149,7 +168,7 @@
         e.preventDefault();
         });	 
     </script>
-    
+*/?>
      
 @endsection
 

@@ -62,16 +62,14 @@
       $sku = $row['sku'];
       $type = $row['type'];
 
-      $hubspotpdes = '';
+      $hubspotpdes = ''; $hubspotpdesCustom = '';
       // catch hubspot product description 
       foreach( $row['meta_data'] as $arr ){
         if($arr['key'] == "_technical_specs"){
         // $canada_price = $row['meta_data'][6]['value'];
         $hubspotpdes = $arr['value'];
-          
-         // 
-         //$hubspotpdes = preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $hubspotpdes));
-         
+       // $hubspotpdesCustom =  preg_replace('/\s+/', ' ', preg_replace('/<[^>]*>/', ' ', $hubspotpdes));
+        
         }
       }
 

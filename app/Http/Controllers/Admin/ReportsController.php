@@ -160,11 +160,10 @@ class ReportsController extends Controller
 
 
    public function downloadPdf($type){
-    
-   $q1 = Layouts::where('list_category',$type)->first();
-   //dd($q1);
+
+        $q1 = Layouts::where('list_category',$type)->first();
+        //dd($q1);
    
-       //dd($q1);
        if($q1->sort_category == "price"){
            if($type == "canada")
            $sort_category = "canada_price";
@@ -174,11 +173,16 @@ class ReportsController extends Controller
            $sort_type = $q1->sort_type;
        }
    
+        $q0 = wpData::where('view_type',$type)
+                    ->orWhere('view_type','both')
+                    ->where('view_status','yes')
+                    ->groupBy('categories')
+                    ->get();
        //$q = wpData::where($qtype,'yes')->orderBy($sort_category,$sort_type)->paginate(10);
        $q = wpData::where('view_type',$type)->orWhere('view_type','both')->where('view_status','yes')->orderBy('serial')->get();
     
     //dd($items);
-    view()->share(compact('q','q1','type'));
+    view()->share(compact('q0','q','q1','type'));
 
     $pdf = PDF::loadView('prlist_pdf');
     $pdfname = "Product_list_$type.pdf";
@@ -212,8 +216,13 @@ public function generatePDFView($type){
     public function pdfcheck(){
         $type= "canada";
         $q1 = Layouts::where('list_category',$type)->first();
+        $q0 = wpData::where('view_type',$type)
+        ->orWhere('view_type','both')
+        ->where('view_status','yes')
+        ->groupBy('categories')
+        ->get();
         $q = wpData::where('view_type',$type)->orWhere('view_type','both')->where('view_status','yes')->orderBy('serial')->get();
-        return view('prlist_pdf',compact('q','q1','type'));
+        return view('prlist_pdf',compact('q0','q','q1','type'));
     }
 
 

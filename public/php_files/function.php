@@ -24,8 +24,8 @@ class DB_con
     public function insert_wp_data($wp_id,$title,$permalink,$image,$short_des,$sku,$type,$variable_product_price,$regular_price,$canada_price,$ontario_price,$categories,$hubspot_p_description)
     {  
         //echo $categories;
-    $ret=mysqli_query($this->dbh,"insert into wp_fetehed_data (wp_id,title,permalink,image,short_des,sku,type,variable_product_price,regular_price,canada_price,ontario_price,categories,hubspot_p_description)
-    values('$wp_id','".mysqli_real_escape_string($this->dbh,$title)."','$permalink','$image','$short_des','$sku','$type','$variable_product_price',$regular_price,$canada_price,$ontario_price,'$categories','$hubspot_p_description')");
+    $ret=mysqli_query($this->dbh,"insert into wp_fetehed_data (wp_id,title,permalink,image,short_des,sku,type,variable_product_price,regular_price,canada_price,ontario_price,categories,hubspot_p_description,hubspot_p_description_local)
+    values('$wp_id','".mysqli_real_escape_string($this->dbh,$title)."','$permalink','$image','$short_des','$sku','$type','$variable_product_price',$regular_price,$canada_price,$ontario_price,'$categories','$hubspot_p_description','$hubspot_p_description')");
     return $ret;
     }
 

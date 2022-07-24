@@ -149,6 +149,12 @@
                             <input type="hidden" name="id[]" value="{{$q1->id}}">
                              
                             <?php clear();?>
+
+                            <b>Hubspot product description</b>  
+                            <?php textareaBox("","hubspot_p_description_local[]",'','','Please enter hubspot product dexcription','10','',$q1->hubspot_p_description_local,'',''); ?>
+                          
+                            
+
                         </td>    
                         
                         <td style="padding:10px">

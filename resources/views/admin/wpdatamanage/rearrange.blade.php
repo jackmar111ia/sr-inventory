@@ -79,7 +79,7 @@
                             </td>
                             <td> {{$q1->title}}
 
-                                <br><?php echo $q1->short_des; ?>
+                                <br><?php echo $q1->hubspot_p_description_local; ?>
                             </td>
                             <td>{{$q1->sku}}</td>
                             <td>${{$q1->regular_price}}</td>

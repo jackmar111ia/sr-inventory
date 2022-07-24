@@ -24,12 +24,12 @@
          word-break: break-all; align:top
         }
 </style>
-<?php $font_size = "font-size:13px";?>
+<?php $font_size = "font-size:11px";?>
+
  <div class="col-sm-12" style="padding:10px; margin-top:-30px; margin-left:-7px;  margin-bottom:-50px; ">
         <div class="card"  style="margin-top:1px; padding-top:3px;">
-             
-          
- 
+                <?php  $i = 1; ?>
+               
                 <div style="100%">
                     <div style="float:left; width:40%; margin-bottom:15px; word-break: break-all; font-weight:bold;  padding-left:10px; font-size:12px">
                     <a href="whatsapp://send?text=Text from customer!&phone=+8801537379613">
@@ -51,86 +51,113 @@
                 </div>
                 <?php clear(); ?>
 
-                <div class="table-responsive">
-                    <table  border="1">
-                        <thead class="text-center" style="<?php echo $font_size;?>"> 
-                            <tr>
-                                <th style="background:#6FA8DC; color:#000" colspan="5"> {{$q1->page_title}} 
-                                </th>
-                            </tr>
-                            <tr style="background:#4DD0E1; padding-right:0px">
-                                <th><?php txt("No");?></th>
-                                <th><?php txt("Picture");?></th>
-                                <th><?php txt("Description");?></th>
-                                <th>SKU/Order#</th>
-                                <th>Price </th>
-                            
-                        </tr>
-                        </thead>
-                        <tbody> <?php $i = 1;?>
-                            @foreach($q as $q1) 
-                            <?php
-                            $clval = $i%2;
-                            if($clval == 0) $bgcolorrow = "#fff"; else $bgcolorrow= "#DEF8F9";?>
-                            <tr style="border:solid 1px #999; background:<?php echo $bgcolorrow;?>">
-                                <td  style="vertical-align:top;padding:3px"><b style="<?php echo $font_size;?>" >&nbsp;{{ $i }} </b> 
 
-                            
+                    <div class="table-responsive">
+                            <table  border="1">
                         
-                                </td>
-                                <td style="width:auto;padding:3px; vertical-align:top;text-align:center;">
-                                     <a href="<?php echo $q1->permalink; ?>" target="_blank">
-                                        <img src="{{ asset($q1->resize_image)}}" width="40" class="img-responsive"  style="align:top"  target="_blank">
-                                    </a>
-                                </td>  
-                                <td style=" line-height:1;padding:3px; text-align:center;">
-                                <a style="<?php echo $font_size;?>; color:#29246D; font-weight:bold" href="<?php echo $q1->permalink; ?>" target="_blank">{{ $q1->title }}</a>
-                                    <?php clear();?>
+                                <thead class="text-center" style="<?php echo $font_size;?>"> 
+                                    <tr>
+                                        <th style="background:#6FA8DC; color:#000" colspan="5"> {{$q1->page_title}} 
+                                        
+                                        </th>
+                                        </tr>
+
                                     
-                                        <?php //echo str_replace('font-size: 12px;', 'font-size: 16px;', $q1->short_des); ?>
-                                        <?php  echo $q1->short_des; ?>
-                                      
-                                </div>
-                                <?php clear();?>
-                                </td>    
-                                <td style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>">{{ $q1->sku }}</td> 
+
+                                        <tr style="background:#4DD0E1">
+                                        <th style="width:40px"><?php txt("No");?></th>
+                                        <th><?php txt("Picture");?></th>
+                                        <th><?php txt("Description");?> 
+
+                                        </th>
+                                        <th>SKU/Order</th>
+                                        <th style="width:80px">Price</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <?php  
+                                foreach($q0 as $q2){
+                                    $excludedCategories = str_replace("<br>",",",$q2->categories);
                                 
-                                    @if($q1->type == "variable")
-                                        <td colspan="2" style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>" >
-                                            <b><?php echo $q1->variable_product_price; ?> </b> 
-                                            <?php /*
-                                            <br>
-                                            <a href="https://www.simplyretrofits.com/?add-to-cart=<?php echo $q1->wp_id; ?>&quantity=1" class="btn btn-success" target="_new"> Order</a>
-                                            */?>
-                                        </td>
-                                    @else
-                                        <td style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>"> <font color='red'>
-                                            @if($type == "canada")
-                                            $<?php echo $q1->canada_price; ?>
-                                            @else
-                                            $<?php echo $q1->ontario_price; ?>
-                                            @endif
-                                            </b></font>
-                                            <?php /*
-                                            <br>
-                                            <a href="https://www.simplyretrofits.com/?add-to-cart=<?php echo $q1->wp_id; ?>&quantity=1" class="btn btn-success" target="_new">Order</a>
-                                            */?>
-                                        </td>
-                                    @endif
+                                    ?>
+                                    <tbody> 
+                                        <tr>
+                                            <td colspan="5" style="background:#4DD0E1; <?php echo $font_size;?>; ">  <?php  echo "<b> Categories: $excludedCategories</b>"; ?></td>
+                                        </tr>
+                                    </tbody> 
+                                    <?php
+                                    $q = categoryWiseWpData($type,$q2->categories);
+                                    ?>
+
+                                    <tbody> 
+                                        @foreach($q as $q1)
+                                        <?php
+                                        $clval = $i%2;
+                                        if($clval == 0) $bgcolorrow = "#fff"; else $bgcolorrow= "#DEF8F9";?>
+                                        <tr style="border:solid 1px #999; background:<?php echo $bgcolorrow;?>">
+                                            <td  style="vertical-align:top;padding:3px"><b style="<?php echo $font_size;?>" >&nbsp;{{ $i }} </b> 
+
+                                        
                                     
-                                    
-                                    
-                                    
-                                
-                            </tr>  
-                            <?php $i = $i+1; ?>                            
-                            @endforeach                                            
-                        </tbody>
-                    </table>
-                </div>
-               <?php /* {{ $q->links() }}     */?>        
+                                            </td>
+                                            <td style="width:auto;padding:3px; vertical-align:top;text-align:center;">
+                                                <a href="<?php echo $q1->permalink; ?>" target="_blank">
+                                                    <img src="{{ asset($q1->resize_image)}}" width="40" class="img-responsive"  style="align:top"  target="_blank">
+                                                </a>
+                                            </td>  
+                                            <td style=" line-height:1;padding:3px; text-align:center; <?php echo $font_size;?>;">
+                                            <a style=" color:#29246D; font-weight:bold" href="<?php echo $q1->permalink; ?>" target="_blank">{{ $q1->title }}</a>
+                                                <?php clear();?>
+                                                
+                                                    <?php //echo str_replace('font-size: 12px;', 'font-size: 16px;', $q1->short_des); ?>
+                                                    <?php  echo $q1->hubspot_p_description_local; ?>
+                                                
+                                            </div>
+                                            <?php clear();?>
+                                            </td>    
+                                            <td style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>">{{ $q1->sku }}</td> 
+                                            
+                                                @if($q1->type == "variable")
+                                                    <td colspan="2" style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>" >
+                                                        <b><?php echo $q1->variable_product_price; ?> </b> 
+                                                        <?php /*
+                                                        <br>
+                                                        <a href="https://www.simplyretrofits.com/?add-to-cart=<?php echo $q1->wp_id; ?>&quantity=1" class="btn btn-success" target="_new"> Order</a>
+                                                        */?>
+                                                    </td>
+                                                @else
+                                                    <td style="vertical-align:top; padding:3px; text-align:center;<?php echo $font_size;?>"> <font color='red'>
+                                                        @if($type == "canada")
+                                                        $<?php echo $q1->canada_price; ?>
+                                                        @else
+                                                        $<?php echo $q1->ontario_price; ?>
+                                                        @endif
+                                                        </b></font>
+                                                        <?php /*
+                                                        <br>
+                                                        <a href="https://www.simplyretrofits.com/?add-to-cart=<?php echo $q1->wp_id; ?>&quantity=1" class="btn btn-success" target="_new">Order</a>
+                                                        */?>
+                                                    </td>
+                                                @endif
+                                                
+                                                
+                                                
+                                                
+                                            
+                                        </tr>  
+                                        <?php $i = $i+1; ?>                            
+                                        @endforeach                                            
+                                    </tbody>
+                                        
+                                <?php          
+                                }
+                                ?>
+                          
+                        </table>
+                    </div>
                 
-            </div>
+                
+        </div>
         
     </div>
 

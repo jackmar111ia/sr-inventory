@@ -4,6 +4,26 @@
  @endsection
  @section('middle-content')
  
+
+ <?php
+if(!isset($_GET['width']))
+{?>
+<script src="screenwidth.js" ></script>
+
+<?php
+}
+?>
+
+
+<?php
+if(isset($_GET['width']))
+{
+  $width = $_GET['width'];
+  echo $width - 100;
+}
+  
+?>
+
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
@@ -30,6 +50,7 @@
 
 
 
+/*
  $width = "<script>document.write(screen.width);</script>";
  echo $width; 
  //$b = $width - 90;
@@ -38,14 +59,13 @@
 // if($width>1100) echo "Big device"; else echo "Small device";
 //echo $height = "Height : <script>document.write(screen.height);</script>";
 
-/*
 $demo= "$width";
 $num = intval($width);
 echo "Here".$num;
-*/
+
 
 $int = (int)$width;
-
+*/
 ?>
 
     <div class="col-sm-12">
@@ -136,7 +156,7 @@ $int = (int)$width;
                                                 <td style="padding:2px; vertical-align:top; ">
                                                 <a href="<?php echo $q1->permalink; ?>" target="_blank">{{ $q1->title }}</a>
                                                 <br> 
-                                                <?php echo $q1->short_des; ?> 
+                                                <?php echo $q1->hubspot_p_description_local; ?> 
                                                 </td>    
                                                 <td>{{ $q1->sku }}</td> 
                                                 
@@ -284,7 +304,7 @@ $int = (int)$width;
                                                     <td colspan="4">
                                                         <a href="<?php echo $q1->permalink; ?>" target="_blank">{{ $q1->title }}</a>
                                                     <?php clear();?> 
-                                                    <?php echo $q1->short_des; ?> 
+                                                    <?php echo $q1->hubspot_p_description_local; ?> 
                                                     </td>
                                                 </tr> 
                                                 <?php $i = $i+1; ?>                            
